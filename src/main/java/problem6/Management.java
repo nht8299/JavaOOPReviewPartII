@@ -1,7 +1,5 @@
 package problem6;
 
-import problem2.CongNhan;
-
 import java.util.*;
 
 public class Management {
@@ -10,10 +8,25 @@ public class Management {
     public void start(){
         Scanner keyboard = new Scanner(System.in);
         System.out.println(addPerson().toString());
+//        Person person = new Student("Thinh Nguyen","34 Dinh Tien Hoang",80,90);
+//        Person person1 = new Student("Trung Nguyen","34 Dinh Tien Hoang",40,50);
+//        Person person2 = new Employee("Toan Nguyen","34 Dinh Tien Hoang",200,90);
+//        Person person3 = new Employee("Tuan Nguyen","34 Dinh Tien Hoang",20,3000);
+//        Person person4 = new Customer("Hung Nguyen","34 Dinh Tien Hoang","Axon",900000);
+//        managementList.add(person);
+//        managementList.add(person1);
+//        managementList.add(person2);
+//        managementList.add(person3);
+//        managementList.add(person4);
+        System.out.println(managementList.toString());
         System.out.println("---------------------------------------------------");
         System.out.println("Please enter the name of the person you want to delete: ");
+        int beforeDelete = managementList.size();
         String deleteName = keyboard.nextLine();
         deletePerson(deleteName);
+        if (managementList.size() < beforeDelete){
+            System.out.println("Delete success!");
+        }else System.out.println("Person not found!");
         System.out.println("---------------------------------------------------");
         System.out.println("List of Person sort by full name : "+sortByFullName());
         printTable();
@@ -78,14 +91,12 @@ public class Management {
         return new Customer(newCustomerName,newCustomerAddress,newCustomerCompanyName,newCustomerInvoice);
     }
 
-    public List<Person> deletePerson(String fullname){
-        for (Person person:managementList) {
-            if ( person.getFullName().equalsIgnoreCase(fullname) ){
-                managementList.remove(person);
-                System.out.println("Remove Success!");;
-            }else System.out.println("Person not found!");
-        }
-        return managementList;
+    public void deletePerson(String fullName){
+       for(int i = 0; i < managementList.size();i++){
+           if (managementList.get(i).getFullName().equalsIgnoreCase(fullName)){
+               managementList.remove(managementList.get(i));
+           }
+       }
     }
     public List<Person>sortByFullName(){
             Collections.sort(managementList, new Comparator<Person>() {
@@ -104,11 +115,11 @@ public class Management {
                 listOfStudent.add((Student) person);
             }
         }
-        String tableFormat = "| %-11s | %-11s | %-9.1d  | %-9.1d  | %-9.1f  | %-8s |%n";
+        String tableFormat = "| %-10s | %-15s | %-9d  | %-9d  | %-12d  | %-8s |%n";
 
-        System.out.format("+-------------+-------------+-------------+------------+-----------------+--------------+   %n");
-        System.out.format("| Full Name   | Address     | Score 1     | Score 2    | Average Score   | Grade        |  %n");
-        System.out.format("+-------------+-------------+-------------+------------+-----------------+--------------+   %n");
+        System.out.format("+-------------+---------------------+------------+------------+---------------+----------+   %n");
+        System.out.format("| Full Name   |        Address      | Score 1    | Score 2    | Average Score | Grade    |  %n");
+        System.out.format("+-------------+---------------------+------------+------------+---------------+----------+   %n");
 
         for (int i = 0; i < listOfStudent.size(); i++) {
             System.out.format(tableFormat,
@@ -119,8 +130,10 @@ public class Management {
                     listOfStudent.get(i).getAverageScore(),
                     listOfStudent.get(i).toGrade());
         }
-        System.out.format("+-------------+-------------+-------------+------------+-----------------+--------------+   %n");
-
+        System.out.format("+-------------+---------------------+------------+------------+---------------+----------+   %n");
+        System.out.println("");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("");
         List<Employee> listOfEmployee = new ArrayList<>();
         for (Person person:managementList
         ) {
@@ -128,11 +141,11 @@ public class Management {
                 listOfEmployee.add((Employee) person);
             }
         }
-        String tableFormatE = "| %-11s | %-11s | %-11f | %-11f  | %-12.1f | %n";
+        String tableFormatE = "| %-13s | %-18s | %-11.2f | %-13d  | %-10.1f | %n";
 
-        System.out.format("+---------------+---------------+-------------+-----------------+------------+  %n");
-        System.out.format("| Full Name     | Address       | Pay Rate    | Working Hours   | Salary     | %n");
-        System.out.format("+---------------+---------------+-------------+-----------------+------------+  %n");
+        System.out.format("+---------------+--------------------+-------------+----------------+------------+  %n");
+        System.out.format("|   Full Name   |      Address       | Pay Rate    | Working Hours  | Salary     | %n");
+        System.out.format("+---------------+--------------------+-------------+----------------+------------+  %n");
 
         for (int i = 0; i < listOfEmployee.size(); i++) {
             System.out.format(tableFormatE,
@@ -142,8 +155,10 @@ public class Management {
                     listOfEmployee.get(i).getWorkingHours(),
                     listOfEmployee.get(i).getSalary());
         }
-        System.out.format("+-------------+-------------+-------------+-----------------+------------+  %n");
-
+        System.out.format("+---------------+--------------------+-------------+----------------+------------+  %n");
+        System.out.println("");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("");
         List<Customer> listOfCustomer = new ArrayList<>();
         for (Person person:managementList
         ) {
@@ -151,20 +166,19 @@ public class Management {
                 listOfCustomer.add((Customer) person);
             }
         }
-        String tableFormatC = "| %-11s | %-11s | %-15s | %-12f  |%n";
+        String tableFormatC = "| %-15s | %-22s | %-15s | %-12.2f  |%n";
 
-        System.out.format("+-----------------+---------------+----------------+-----------+ %n");
-        System.out.format("| Full Name       | Address       | Company Name   | Invoice   | %n");
-        System.out.format("+-----------------+---------------+----------------+-----------+ %n");
+        System.out.format("+-----------------+------------------------+----------------+----------------+ %n");
+        System.out.format("| Full Name       |          Address       | Company Name   |      Invoice   | %n");
+        System.out.format(" %n");
 
-        for (int i = 0; i < listOfEmployee.size(); i++) {
+        for (int i = 0; i < listOfCustomer.size(); i++) {
             System.out.format(tableFormatC,
                     listOfCustomer.get(i).getFullName(),
                     listOfCustomer.get(i).getAddress(),
                     listOfCustomer.get(i).getCompanyName(),
                     listOfCustomer.get(i).getInvoice());
         }
-        System.out.format("+-------------+-------------+----------------+-----------+ %n");
+        System.out.format("+-----------------+------------------------+----------------+----------------+ %n");
     }
-//    https://code.google.com/archive/p/j-text-utils/
 }

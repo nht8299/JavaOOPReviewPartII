@@ -36,9 +36,9 @@ public class Student extends Person{
     @Override
     public String toString(){
         return super.toString() +
-                "Score 1: " + score1 +
-                "Score 2: " + score2 +
-                "Average Score: "+ getAverageScore() +
-                "Grade: "+ toGrade();
+                "Score 1: " + score1 +"\n"+
+                "Score 2: " + score2 +"\n"+
+                "Average Score: "+ getAverageScore() +"\n"+
+                "Grade: "+ toGrade()+"\n";
     }
 }

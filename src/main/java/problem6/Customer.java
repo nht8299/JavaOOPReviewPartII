@@ -20,7 +20,7 @@ public class Customer extends Person{
     @Override
     public String toString(){
         return super.toString()+
-                "Company Name: " + companyName+
-                "Invoice: "+invoice;
+                "Company Name: " + companyName+"\n"+
+                "Invoice: "+invoice+"\n";
     }
 }
